@@ -137,18 +137,18 @@ mlartifacts/
 mlflow.db
 
 # Models
-models/*.pkl
-models/*.joblib
-models/*.h5
-models/*.pt
-models/*.pth
-models/*.onnx
-models/*.pb
-*.pkl
-*.joblib
+# models/*.pkl
+# models/*.joblib
+# models/*.h5
+# models/*.pt
+# models/*.pth
+# models/*.onnx
+# models/*.pb
+# *.pkl
+# *.joblib
 
-# Keep model directory but ignore contents
-!models/.gitkeep
+# # Keep model directory but ignore contents
+# !models/.gitkeep
 
 # Data files (keep only the original dataset)
 # Uncomment the line below if you want to ignore the dataset

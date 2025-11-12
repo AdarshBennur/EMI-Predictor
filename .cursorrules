@@ -1,0 +1,294 @@
+# EMI-Predict AI - Cursor AI Project Rules
+
+## Project Context
+This is a production-ready machine learning project for EMI (Equated Monthly Installment) eligibility and amount prediction. The project uses scikit-learn, XGBoost, MLflow for experiment tracking, and Streamlit for the web interface.
+
+## Code Style & Standards
+
+### Python Guidelines
+- Follow PEP 8 with 88-character line length (Black formatter)
+- Use type hints for all function parameters and return values
+- Write Google-style docstrings for all functions and classes
+- Use descriptive variable names (e.g., `monthly_salary` not `ms`)
+- Prefer explicit over implicit code
+- Keep functions focused (single responsibility principle)
+
+### Naming Conventions
+- Classes: PascalCase (e.g., `EMIPredictor`)
+- Functions/variables: snake_case (e.g., `calculate_debt_ratio`)
+- Constants: UPPER_SNAKE_CASE (e.g., `MAX_LOAN_AMOUNT`)
+- Private methods: _leading_underscore (e.g., `_internal_helper`)
+- Module names: lowercase with underscores (e.g., `data_loader.py`)
+
+### Import Organization
+1. Standard library imports
+2. Third-party imports (pandas, sklearn, etc.)
+3. Local application imports
+4. Sort alphabetically within each group
+
+## Documentation Requirements
+
+### Function Documentation
+Every function must have:
+- One-line summary
+- Args section with types
+- Returns section with types
+- Raises section (if applicable)
+- Example usage (for public APIs)
+- Note/Warning sections (if applicable)
+
+### Code Comments
+- Explain WHY, not WHAT
+- Comment complex algorithms and business logic
+- Document assumptions and constraints
+- Add TODO comments with issue numbers for future work
+
+## Testing Requirements
+
+### Test Coverage
+- Maintain minimum 85% code coverage
+- Critical modules (data, models): 90%+ coverage
+- Write tests before or alongside code (TDD encouraged)
+
+### Test Structure
+- Use pytest framework
+- Organize tests to mirror source structure
+- Use fixtures for common setup
+- Use parametrize for multiple test cases
+- Follow AAA pattern: Arrange, Act, Assert
+
+### Test Naming
+- Prefix with `test_`
+- Be descriptive: `test_load_data_with_missing_values_succeeds`
+- Test both happy path and edge cases
+
+## Machine Learning Best Practices
+
+### Data Processing
+- Always validate input data
+- Handle missing values explicitly
+- Document all transformations
+- Use pipelines for reproducibility
+- Log data statistics to MLflow
+
+### Model Training
+- Track all experiments with MLflow
+- Log hyperparameters, metrics, and artifacts
+- Use cross-validation for robust evaluation
+- Set random seeds for reproducibility
+- Save feature importance/SHAP values
+
+### Model Evaluation
+- Classification: accuracy, precision, recall, F1, ROC-AUC
+- Regression: RMSE, MAE, R², MAPE
+- Always use separate test set
+- Create confusion matrices and residual plots
+- Document model assumptions and limitations
+
+## MLflow Integration
+
+### Experiment Tracking
+- Create separate experiments for classification and regression
+- Use meaningful run names (e.g., "xgboost_v1_tuned")
+- Log all hyperparameters
+- Log all evaluation metrics
+- Save confusion matrices and plots as artifacts
+- Tag runs with stage (dev/staging/prod)
+
+### Model Registry
+- Register best-performing models
+- Use semantic versioning
+- Document model changes in description
+- Transition models through stages properly
+
+## Streamlit Guidelines
+
+### UI/UX
+- Use clear, non-technical language for users
+- Provide helpful tooltips and descriptions
+- Show loading spinners for long operations
+- Handle errors gracefully with user-friendly messages
+- Use st.cache_data and st.cache_resource appropriately
+
+### Page Structure
+- Use consistent layout across pages
+- Add navigation instructions
+- Show relevant metrics and visualizations
+- Validate user inputs before processing
+- Provide example inputs for guidance
+
+## Configuration Management
+
+### Environment Variables
+- Never hardcode sensitive data
+- Use .env for local configuration
+- Validate required environment variables at startup
+- Provide sensible defaults where appropriate
+- Document all variables in .env.example
+
+### Settings
+- Centralize configuration in config/settings.py
+- Use environment variables for deployment flexibility
+- Keep configuration DRY (Don't Repeat Yourself)
+
+## Error Handling
+
+### Best Practices
+- Use specific exception types
+- Provide helpful error messages
+- Log errors with appropriate levels
+- Don't expose sensitive data in errors
+- Fail fast for critical errors
+- Graceful degradation where possible
+
+### Logging
+- Use structured logging
+- Log at appropriate levels (DEBUG, INFO, WARNING, ERROR)
+- Include context in log messages
+- Don't log sensitive data (PII, credentials)
+
+## Performance Considerations
+
+### Data Processing
+- Use vectorized operations (pandas/numpy)
+- Process data in chunks for large datasets
+- Use appropriate data types (e.g., category for categorical)
+- Cache expensive computations
+- Profile performance bottlenecks
+
+### Model Training
+- Use parallel processing (n_jobs=-1)
+- Implement early stopping
+- Use GPU when available and beneficial
+- Monitor memory usage for large datasets
+
+## Security Guidelines
+
+### Input Validation
+- Validate all user inputs
+- Sanitize inputs to prevent injection
+- Check data types and ranges
+- Handle edge cases explicitly
+
+### Data Privacy
+- Don't log PII or sensitive data
+- Hash or anonymize identifiers in logs
+- Follow data protection regulations
+- Secure model files and credentials
+
+## Git Workflow
+
+### Commits
+- Use conventional commit messages
+- Make atomic commits (one logical change)
+- Write clear commit messages
+- Don't commit sensitive data or large files
+
+### Branches
+- Use feature branches for development
+- Name branches descriptively (e.g., feature/add-xgboost)
+- Keep branches short-lived
+- Rebase on main before merging
+
+## Code Review
+
+### Before Submitting
+- Run all tests locally
+- Check code coverage
+- Run linters (flake8, black)
+- Update documentation
+- Self-review your changes
+
+### Review Checklist
+- Code follows style guidelines
+- Tests are comprehensive
+- Documentation is complete
+- No hardcoded values or secrets
+- Error handling is proper
+- Performance is acceptable
+
+## Project-Specific Rules
+
+### File Organization
+- Keep modules focused and cohesive
+- Avoid circular dependencies
+- Use relative imports within package
+- Put shared utilities in utils/ module
+
+### Model Development
+- Start with simple baseline models
+- Compare multiple algorithms
+- Document model selection rationale
+- Track all experiments, even failed ones
+- Keep best models in model registry
+
+### Data Processing
+- Keep raw data unchanged
+- Document all preprocessing steps
+- Make preprocessing reproducible
+- Handle outliers and missing values explicitly
+- Create derived features in feature engineering module
+
+### Deployment
+- Test on production-like data
+- Monitor model performance
+- Implement model versioning
+- Plan for model updates and retraining
+- Document deployment process
+
+## Tools & Commands
+
+### Development
+```bash
+# Format code
+black .
+
+# Lint code
+flake8 emipredict/
+
+# Run tests
+pytest --cov=emipredict
+
+# Type checking (optional)
+mypy emipredict/
+```
+
+### MLflow
+```bash
+# Start MLflow UI
+mlflow ui
+
+# View experiments
+mlflow experiments list
+```
+
+### Streamlit
+```bash
+# Run app
+streamlit run emipredict/app/main.py
+
+# Clear cache
+streamlit cache clear
+```
+
+## Additional Notes
+
+- Prioritize code readability and maintainability
+- Write code for humans, optimize for machines only when needed
+- Document trade-offs and design decisions
+- Keep dependencies up to date
+- Regularly refactor to reduce technical debt
+- Share knowledge through documentation and comments
+- Ask for clarification when requirements are unclear
+
+## Project Goals
+
+Remember, this project aims to:
+- Achieve 90%+ classification accuracy
+- Achieve RMSE < 2000 INR for regression
+- Maintain 85%+ test coverage
+- Provide production-ready, maintainable code
+- Enable easy deployment and monitoring
+
+When in doubt, refer to ARCHITECTURE.md, DEVGUIDE.md, and SETUP.md for detailed guidelines.
+
